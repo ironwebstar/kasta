@@ -1,0 +1,23 @@
+export const COLORS = {
+  default: '#21223E',
+  loaded: '#4B4F93',
+  success: '#0C8D87',
+  error: '#C01332',
+  primary: '#376BBF',
+  text: '#434343',
+  subtitle: '#1B2522',
+  wallRed: '#D35D5D',
+  warning: '#FF944D',
+  darkGrey: '#4F4D4D',
+  grey: '#979797',
+  tintGrey: '#909090',
+  lightGrey: '#F3F1F1',
+  smoothGrey: '#DADADA',
+  opacity: '#C8C8C8',
+  greyBackground: '#F0F0F0',
+  transparent: '#00000000',
+
+  white: '#ffffff',
+  black: '#000000',
+  dark: '#343434',
+};
