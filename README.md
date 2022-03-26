@@ -15,11 +15,10 @@
 - Button component (KastaButton): /src/components/kasta-button/kasta-button.tsx
 
 # Screenshots
+![9CA81F6A-9572-4D0B-8372-D7680608E82C](https://user-images.githubusercontent.com/36421515/160219591-463306d9-1b32-4529-a782-7794c8190ee1.png)
+![4DBC436E-5887-4078-BACB-A7890A4B7B63](https://user-images.githubusercontent.com/36421515/160219617-764663f6-b08f-438e-b503-1926581dc37f.png)
+![9B7BA0F0-DA8D-4182-8B21-8FC1ACE44AF3](https://user-images.githubusercontent.com/36421515/160219627-be233303-95f9-46f7-9497-f321c8a59b5b.png)
 
-![14DC7178-23B3-47B6-97EB-F616077088ED](https://user-images.githubusercontent.com/36421515/158732941-fb38fe7c-763d-416d-83af-fe3768132c79.png)
-![EC4CD20F-41F3-463C-9F62-684AE0A26605](https://user-images.githubusercontent.com/36421515/158733140-10aaeb35-4954-49d9-9fbe-b3f911529a5c.png)
-![284A37CD-1563-40D2-BA12-062573549739](https://user-images.githubusercontent.com/36421515/158733125-ca2b5c3a-298b-4e89-89d6-c720c6894557.png)
-![131F71C8-E9C8-441A-B7E2-1A836B71E2D9](https://user-images.githubusercontent.com/36421515/158733202-80665eb4-a7fe-4d8f-a13a-e942f7dea5b0.png)
 
 # Improvement/Difficulties
 1. `UI Side`: It's not clear how we go back to `Default` state from `Success` and `Error` state. For now, we can click on `Success` and `Error` button to start again.
