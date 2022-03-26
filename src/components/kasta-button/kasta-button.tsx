@@ -28,7 +28,7 @@ const ERROR_TIMEOUT = 7;
 const KastaButton: React.FC<KastaButtonProps> = ({
   to,
   amount,
-  isSuccessCase,
+  isSuccessCase = true,
 }) => {
   const responseTimeout = isSuccessCase ? SUCCESS_TIMEOUT : ERROR_TIMEOUT;
   const {isConnected, isInternetReachable} = useNetwork();
