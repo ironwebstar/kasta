@@ -126,18 +126,16 @@ const KastaButton: React.FC<KastaButtonProps> = ({
   }, [paymentStatus]);
 
   return (
-    <>
-      <Styles.KastaButton
-        label={label}
-        color={color}
-        onPress={handleSubmit}
-        width={213}
-        height={60}
-        progress={progress}
-        disabled={paymentStatus === TransactionProgress.Loaded}
-        status={paymentStatus}
-      />
-    </>
+    <Styles.KastaButton
+      label={label}
+      color={color}
+      onPress={handleSubmit}
+      width={213}
+      height={60}
+      progress={progress}
+      disabled={paymentStatus === TransactionProgress.Loaded}
+      status={paymentStatus}
+    />
   );
 };
 
