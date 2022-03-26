@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-
 import { Theme } from '@styles/theme';
 import { COLORS } from '@styles/constants';
+import { Animated } from 'react-native';
 
 export const ButtonStyles = {
   Wrapper: styled.TouchableOpacity<{
@@ -27,7 +27,7 @@ export const ButtonStyles = {
     height: ${({ height }) => height}px;
   `,
 
-  Label: styled(Theme.Text)<{ text?: boolean }>`
+  Label: styled(Theme.Text) <{ text?: boolean }>`
     text-align: center;
     display: flex;
     align-items: center;
@@ -37,5 +37,16 @@ export const ButtonStyles = {
 
   StyledView: styled.View`
     padding-left: 14px;
+  `,
+
+  Fill: styled(Animated.View) <{ color?: string }>`
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: ${({ color }) => color || COLORS.loaded};
+    border-radius: 5px;
+    margin-right: 5px;
   `,
 };

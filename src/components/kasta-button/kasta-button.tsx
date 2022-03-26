@@ -17,21 +17,20 @@ export enum TransactionProgress {
 interface KastaButtonProps {
   to: string;
   amount: string | number;
-  updateProgress?: (progress: number) => void;
-  updateColor?: (color: string) => void;
+  isSuccessCase?: boolean;
 }
 
-const RESPONSE_TIMEOUT = 15;
 const PROGRESS_INTERVAL = 1000;
 const SUCCESS_PROGRESS = 100;
-const INITIAL_PROGRESS = 5; // For visual effect
+const SUCCESS_TIMEOUT = 15;
+const ERROR_TIMEOUT = 7;
 
 const KastaButton: React.FC<KastaButtonProps> = ({
   to,
   amount,
-  updateProgress,
-  updateColor,
+  isSuccessCase,
 }) => {
+  const responseTimeout = isSuccessCase ? SUCCESS_TIMEOUT : ERROR_TIMEOUT;
   const {isConnected, isInternetReachable} = useNetwork();
   const [paymentId, setPaymentId] = useState<string>('');
   const [paymentStatus, setStatus] = useState<string>(
@@ -47,13 +46,13 @@ const KastaButton: React.FC<KastaButtonProps> = ({
     if (paymentId) {
       const transactionProgress = await getPaymentProgress(paymentId);
       setTimer(timer + 1);
-      setProgress(transactionProgress + INITIAL_PROGRESS);
+      setProgress(transactionProgress);
       if (transactionProgress >= SUCCESS_PROGRESS) {
         setStatus(TransactionProgress.Success);
         setTimer(0);
         setDelay(null);
       } else {
-        if (timer > RESPONSE_TIMEOUT) {
+        if (timer > responseTimeout) {
           setStatus(TransactionProgress.Error);
           setTimer(0);
           setDelay(null);
@@ -61,6 +60,7 @@ const KastaButton: React.FC<KastaButtonProps> = ({
       }
     }
   };
+
   // Check payment progress every 1s
   useInterval(checkProgress, delay);
 
@@ -76,7 +76,7 @@ const KastaButton: React.FC<KastaButtonProps> = ({
     const {id} = await createPayment({to, amount: Number(amount)});
     if (id) {
       setStatus(TransactionProgress.Loaded);
-      setProgress(INITIAL_PROGRESS);
+      setProgress(0);
       setPaymentId(id);
       setDelay(PROGRESS_INTERVAL);
     }
@@ -111,7 +111,6 @@ const KastaButton: React.FC<KastaButtonProps> = ({
 
       case TransactionProgress.Loaded:
         setLabel(STRINGS.actions.submit);
-        setColor(COLORS.loaded);
         break;
 
       case TransactionProgress.Error:
@@ -126,15 +125,6 @@ const KastaButton: React.FC<KastaButtonProps> = ({
     }
   }, [paymentStatus]);
 
-  useEffect(() => {
-    if (updateProgress) {
-      updateProgress(progress);
-    }
-    if (updateColor) {
-      updateColor(color);
-    }
-  }, [progress, color]);
-
   return (
     <>
       <Styles.KastaButton
@@ -143,6 +133,7 @@ const KastaButton: React.FC<KastaButtonProps> = ({
         onPress={handleSubmit}
         width={213}
         height={60}
+        progress={progress}
         disabled={paymentStatus === TransactionProgress.Loaded}
         status={paymentStatus}
       />

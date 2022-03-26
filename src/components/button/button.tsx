@@ -1,11 +1,12 @@
-import React, { FC } from 'react';
-import { TouchableOpacityProps, View } from 'react-native';
-import { COLORS } from '@styles/constants';
-import { ButtonStyles } from './button.styles';
+import React, {FC, useEffect, useRef} from 'react';
+import {Animated, TouchableOpacityProps} from 'react-native';
+import {COLORS} from '@styles/constants';
+import {ButtonStyles} from './button.styles';
 import Success from '@assets/success.svg';
 import Default from '@assets/default.svg';
 import Error from '@assets/error.svg';
-import { TransactionProgress } from '@components/kasta-button/kasta-button';
+import {TransactionProgress} from '@components/kasta-button/kasta-button';
+
 interface IButtonProps {
   label?: string;
   color?: string;
@@ -14,9 +15,10 @@ interface IButtonProps {
   style?: TouchableOpacityProps;
   width?: number;
   height?: number;
-  onPress?: (_: any) => void;
   disabled?: boolean;
   status: string;
+  progress: number;
+  onPress?: (_: any) => void;
 }
 
 const Button: FC<IButtonProps> = ({
@@ -28,24 +30,42 @@ const Button: FC<IButtonProps> = ({
   width,
   height,
   status,
-  disabled = false,
+  progress,
+  disabled,
   onPress,
 }) => {
+  let animation = useRef(new Animated.Value(0));
+  const animationWidth = animation.current.interpolate({
+    inputRange: [0, 100],
+    outputRange: ['0%', '100%'],
+    extrapolate: 'clamp',
+  });
+
+  useEffect(() => {
+    Animated.timing(animation.current, {
+      toValue: progress,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  }, [progress]);
+
   return (
     <ButtonStyles.Wrapper
-      color={color}
+      color={status === TransactionProgress.Loaded ? COLORS.default : color}
       text={text}
       style={style}
       onPress={onPress}
       disabled={disabled}
       width={width}
-      height={height}
-    >
+      height={height}>
+      <ButtonStyles.Fill
+        color={status === TransactionProgress.Loaded ? COLORS.loaded : color}
+        style={{width: animationWidth}}
+      />
       <ButtonStyles.Label
         fontFamily={text ? 'varelaRound' : 'arialBold'}
         color={textColor || COLORS.white}
-        text={text}
-      >
+        text={text}>
         {label}
       </ButtonStyles.Label>
       <ButtonStyles.StyledView>
